@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viral AI Studio</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#10101c;color:white;font-family:Arial,sans-serif;padding:20px}
+header{text-align:center;padding:25px 5px}
+header h1{color:#a78bfa;font-size:30px}
+header p{color:#aaa}
+main{max-width:650px;margin:auto}
+.card{background:#1d1d30;padding:22px;border-radius:18px;margin:15px 0}
+label{display:block;margin:15px 0 8px}
+input,select,textarea{width:100%;padding:14px;border:1px solid #444;background:#111827;color:white;border-radius:10px;font-size:16px}
+textarea{min-height:100px}
+button{width:100%;padding:15px;border:0;border-radius:10px;background:#7c3aed;color:white;font-size:17px;font-weight:bold;margin-top:18px}
+#resultado{white-space:pre-wrap;line-height:1.6}
+</style>
+</head>
+<body>
+<header>
+<h1>🎬 VIRAL AI STUDIO</h1>
+<p>Tu estudio de creación de videos virales con IA</p>
+</header>
+<main>
+<div class="card">
+<h2>🚀 Crear nuevo video</h2>
+<label>¿De qué trata tu video?</label>
+<textarea id="idea" placeholder="Escribe tu idea aquí..."></textarea>
+<label>Plataforma</label>
+<select id="plataforma">
+<option>YouTube Shorts</option>
+<option>TikTok</option>
+<option>Facebook Reels</option>
+<option>Instagram Reels</option>
+</select>
+<label>Duración</label>
+<select id="duracion">
+<option>30 segundos</option>
+<option>60 segundos</option>
+<option>90 segundos</option>
+</select>
+<button onclick="crear()">✨ Crear guion</button>
+</div>
+<div class="card">
+<h2>📝 Tu guion</h2>
+<div id="resultado">Tu guion aparecerá aquí.</div>
+<button onclick="copiar()">📋 Copiar guion</button>
+</div>
+</main>
+<script>
+function crear(){
+const idea=document.getElementById('idea').value.trim();
+if(!idea){alert('Escribe primero tu idea');return;}
+const p=document.getElementById('plataforma').value;
+const d=document.getElementById('duracion').value;
+document.getElementById('resultado').textContent=
+'TÍTULO: '+idea+'\n\nPLATAFORMA: '+p+
+'\nDURACIÓN: '+d+
+'\n\nGANCHO: ¿Estás preparado para descubrir '+idea+'?\n\nDESARROLLO: Cuenta la historia de '+idea+' con detalles interesantes y sorprendentes.\n\nFINAL: ¿Qué opinas? Comenta y comparte este video.';
+}
+function copiar(){
+const t=document.getElementById('resultado').textContent;
+if(navigator.clipboard){navigator.clipboard.writeText(t).then(()=>alert('Guion copiado'));}
+else{alert('Selecciona el texto y cópialo.');}
+}
+</script>
+</body>
+</html>
