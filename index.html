@@ -49,7 +49,49 @@ button{width:100%;padding:15px;border:0;border-radius:10px;background:#7c3aed;co
 <div id="resultado">Tu guion aparecerá aquí.</div>
 <button onclick="copiar()">📋 Copiar guion</button>
 </div>
-</main>
+</main
+  ><div class="card">
+<h2>🎬 Creador de videos con IA</h2>
+
+<label>Describe tu video</label>
+<textarea id="descripcionVideo" placeholder="Describe la historia que quieres crear..."></textarea>
+
+<label>Formato del video</label>
+<select id="formatoVideo">
+<option>Vertical 9:16</option>
+<option>Horizontal 16:9</option>
+</select>
+
+<label>Duración</label>
+<select id="duracionVideo">
+<option value="30">30 segundos</option>
+<option value="60">1 minuto</option>
+<option value="120">2 minutos</option>
+<option value="180">3 minutos</option>
+<option value="240">4 minutos</option>
+<option value="300">5 minutos</option>
+</select>
+
+<label>Personajes automáticos</label>
+<input id="personajes" placeholder="Describe tus personajes">
+
+<label>Subir tus propios personajes</label>
+<input type="file" id="fotosPersonajes" accept="image/*" multiple>
+
+<label>Estilo del video</label>
+<select id="estiloVideo">
+<option>Animación 3D</option>
+<option>Realista</option>
+<option>Anime</option>
+<option>Dibujos animados</option>
+<option>Cine</option>
+</select>
+
+<button onclick="alert('El panel está preparado. Falta conectar el generador de videos con IA.')">
+✨ Crear video con IA
+</button>
+  </div>
+  
 <script>
 function crear(){
 const idea=document.getElementById('idea').value.trim();
