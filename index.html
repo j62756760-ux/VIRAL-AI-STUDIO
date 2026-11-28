@@ -3,28 +3,26 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VIRAL AI STUDIO</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#10101c;color:white;font-family:Arial,sans-serif}
-header{text-align:center;padding:30px 12px}
-header h1{color:#a78bfa;font-size:30px}
-header p{color:#aaa}
+header{text-align:center;padding:25px 12px}
+header h1{color:#a78bfa;font-size:29px}
 main{max-width:700px;margin:auto;padding:12px}
-.card{background:#1d1d30;padding:22px;border-radius:22px;margin-bottom:20px}
-h2{font-size:23px}
+.card{background:#1d1d30;padding:20px;border-radius:18px;margin-bottom:18px}
+h2{font-size:21px;color:#c4b5fd}
 label{display:block;margin:17px 0 8px}
-input,select,textarea{width:100%;padding:14px;background:#111827;color:white;border:1px solid #444;border-radius:12px;font-size:16px}
-textarea{min-height:100px;resize:vertical}
-button{width:100%;padding:15px;border:0;border-radius:12px;background:#7938ed;color:white;font-size:17px;font-weight:bold;margin-top:12px}
+input,select,textarea{width:100%;padding:14px;background:#111827;color:white;border:1px solid #444;border-radius:10px;font-size:16px}
+textarea{min-height:100px}
+button{width:100%;padding:15px;border:0;border-radius:10px;background:#7c3aed;color:white;font-size:17px;font-weight:bold;margin-top:12px}
 button.secondary{background:#34344e}
-button.remove{background:#922f46}
-.character{background:#292940;padding:14px;border-radius:14px;margin-top:12px}
-.character img{width:100px;height:100px;object-fit:cover;border-radius:12px}
-#resultado{white-space:pre-wrap;line-height:1.6;overflow-wrap:anywhere}
+button:active{opacity:.7}
+.character{background:#292940;padding:12px;border-radius:12px;margin-top:12px}
+.character img{width:100%;max-height:220px;object-fit:contain;border-radius:10px}
+#resultado{white-space:pre-wrap;line-height:1.6;background:#111827;padding:15px;border-radius:10px;overflow-wrap:anywhere}
 .small{color:#aaa;font-size:13px}
-.scene{padding:12px;background:#292940;border-radius:12px;margin:10px 0}
 </style>
 </head>
 <body>
@@ -39,25 +37,17 @@ button.remove{background:#922f46}
 <div class="card">
 <h2>🚀 Crear nuevo video</h2>
 
-<label>¿De qué trata tu video?</label>
-<textarea id="idea" placeholder="Describe la historia que quieres crear..."></textarea>
-
-<label>Plataforma</label>
-<select id="plataforma">
-<option>YouTube Shorts</option>
-<option>YouTube</option>
-<option>TikTok</option>
-<option>Facebook Reels</option>
-<option>Instagram Reels</option>
-</select>
+<label>Describe tu historia</label>
+<textarea id="idea" placeholder="Describe la historia de tu video, los personajes, los lugares y lo que sucede..."></textarea>
 
 <label>Formato del video</label>
 <select id="formato">
 <option value="Vertical 9:16">Vertical 9:16</option>
 <option value="Horizontal 16:9">Horizontal 16:9</option>
+<option value="Cuadrado 1:1">Cuadrado 1:1</option>
 </select>
 
-<label>Duración</label>
+<label>Duración del video</label>
 <select id="duracion">
 <option value="30 segundos">30 segundos</option>
 <option value="1 minuto">1 minuto</option>
@@ -67,164 +57,155 @@ button.remove{background:#922f46}
 <option value="5 minutos">5 minutos</option>
 </select>
 
-<label>Estilo del video</label>
+<label>Estilo visual</label>
 <select id="estilo">
 <option>Animación 3D</option>
 <option>Realista</option>
 <option>Anime</option>
 <option>Dibujos animados</option>
-<option>Cine</option>
+<option>Cine profesional</option>
+<option>Fantasía</option>
+</select>
+
+<label>¿Cuántas escenas?</label>
+<select id="cantidad">
+<option value="5">5 escenas</option>
+<option value="10">10 escenas</option>
+<option value="15">15 escenas</option>
+<option value="20">20 escenas</option>
+<option value="30">30 escenas</option>
 </select>
 </div>
 
 <div class="card">
-<h2>👥 Personajes de tu historia</h2>
+<h2>👥 Crear personajes</h2>
+<label>Nombres y descripciones de tus personajes</label>
+<textarea id="personajes" placeholder="Daniel: joven dominicano, ropa moderna.
+María: joven aventurera, cabello oscuro.
+Pedro: hombre misterioso, ropa negra."></textarea>
 
-<label>Describe los personajes que quieres</label>
-<textarea id="personajes" placeholder="Ejemplo: Daniel, joven dominicano de 22 años, y María, joven de 21 años..."></textarea>
-
-<button class="secondary" onclick="agregarPersonaje()">➕ Agregar personaje</button>
+<button class="secondary" onclick="crearPersonajes()">✨ Crear personajes</button>
 
 <div id="listaPersonajes"></div>
+</div>
 
-<label>📸 Subir tus propios personajes</label>
-<input type="file" id="archivos" accept="image/*" multiple onchange="mostrarPersonajes()">
-
-<p class="small">Puedes subir varias imágenes para utilizarlas como referencias de tus personajes.</p>
-
+<div class="card">
+<h2>📸 Subir tus propios personajes</h2>
+<label>Selecciona imágenes de tus personajes</label>
+<input type="file" id="archivos" accept="image/*" multiple onchange="subirPersonajes()">
 <div id="imagenes"></div>
 </div>
 
 <div class="card">
-<h2>🎞️ Preparar video</h2>
-<p class="small">Organiza la historia, los personajes y las escenas antes de generar el video.</p>
-<button onclick="crearProyecto()">✨ Crear proyecto</button>
-<button class="secondary" onclick="descargarProyecto()">📥 Descargar proyecto</button>
+<h2>🎥 Preparar video</h2>
+<button onclick="crearVideo()">✨ CREAR PROYECTO DE VIDEO</button>
+<p class="small">Prepara el guion, las escenas y las instrucciones visuales. La generación del archivo de video requiere conectar un servicio de IA.</p>
 </div>
 
 <div class="card">
-<h2>📝 Tu proyecto</h2>
-<div id="resultado">Tu proyecto aparecerá aquí.</div>
-</div>
-
-<div class="card">
-<h2>🎬 Generador de videos con IA</h2>
-<p>El proyecto está preparado para conectarse a un servicio de generación de videos mediante un servidor seguro.</p>
-<p class="small">La generación de archivos MP4 todavía no está conectada. Esta versión prepara la historia, los personajes y las escenas.</p>
-<div id="estado">Estado: esperando conexión con el generador de IA.</div>
+<h2>📋 Tu proyecto</h2>
+<div id="estado">Esperando tu proyecto...</div>
+<div id="resultado"></div>
+<button class="secondary" onclick="descargar()">⬇️ Descargar proyecto</button>
 </div>
 
 </main>
 
 <script>
 let proyecto="";
-let fotos=[];
-let personajesExtra=[];
+let imagenesSubidas=[];
 
-function agregarPersonaje(){
-let nombre=prompt("Escribe el nombre o descripción del personaje:");
-if(!nombre)return;
-personajesExtra.push(nombre);
-actualizarPersonajes();
+function crearPersonajes(){
+const texto=document.getElementById("personajes").value;
+const lista=document.getElementById("listaPersonajes");
+lista.innerHTML="";
+if(!texto.trim()){
+alert("Escribe los personajes primero");
+return;
 }
-
-function actualizarPersonajes(){
-document.getElementById("listaPersonajes").innerHTML=
-personajesExtra.map((p,i)=>`
-<div class="character">
-<strong>Personaje ${i+1}</strong>
-<p>${escapar(p)}</p>
-<button class="remove" onclick="eliminarPersonaje(${i})">Eliminar</button>
-</div>`).join("");
-}
-
-function eliminarPersonaje(i){
-personajesExtra.splice(i,1);
-actualizarPersonajes();
-}
-
-function escapar(s){
-return String(s).replace(/[&<>"']/g,c=>({
-"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-}[c]));
-}
-
-function mostrarPersonajes(){
-const files=Array.from(document.getElementById("archivos").files);
-const area=document.getElementById("imagenes");
-area.innerHTML="";
-fotos=files;
-
-files.forEach(file=>{
-if(!file.type.startsWith("image/"))return;
-const url=URL.createObjectURL(file);
-const img=document.createElement("img");
-img.src=url;
-img.alt=file.name;
-img.style.width="100px";
-img.style.height="100px";
-img.style.objectFit="cover";
-img.style.margin="6px";
-img.style.borderRadius="12px";
-area.appendChild(img);
+texto.split("\n").filter(x=>x.trim()).forEach((p,i)=>{
+const div=document.createElement("div");
+div.className="character";
+const nombre=p.split(":")[0];
+div.innerHTML="<strong>🎭 "+nombre+"</strong>";
+const descripcion=document.createElement("textarea");
+descripcion.value=p;
+descripcion.style.marginTop="10px";
+div.appendChild(descripcion);
+const cambiar=document.createElement("button");
+cambiar.className="secondary";
+cambiar.textContent="Cambiar personaje";
+cambiar.onclick=()=>{
+const nuevo=prompt("Escribe la nueva descripción:",descripcion.value);
+if(nuevo!==null)descripcion.value=nuevo;
+};
+div.appendChild(cambiar);
+lista.appendChild(div);
 });
 }
 
-function crearProyecto(){
+function subirPersonajes(){
+const archivos=document.getElementById("archivos").files;
+const zona=document.getElementById("imagenes");
+zona.innerHTML="";
+imagenesSubidas=[];
+Array.from(archivos).forEach((archivo,i)=>{
+const url=URL.createObjectURL(archivo);
+imagenesSubidas.push(archivo.name);
+const div=document.createElement("div");
+div.className="character";
+const img=document.createElement("img");
+img.src=url;
+img.alt=archivo.name;
+const p=document.createElement("p");
+p.textContent="Personaje "+(i+1)+": "+archivo.name;
+div.appendChild(img);
+div.appendChild(p);
+zona.appendChild(div);
+});
+}
+
+function crearVideo(){
 const idea=document.getElementById("idea").value.trim();
 if(!idea){
-alert("Primero escribe la historia de tu video.");
+alert("Describe tu historia primero");
 return;
 }
-
-const duracion=document.getElementById("duracion").value;
 const formato=document.getElementById("formato").value;
+const duracion=document.getElementById("duracion").value;
 const estilo=document.getElementById("estilo").value;
-const plataforma=document.getElementById("plataforma").value;
+const cantidad=Number(document.getElementById("cantidad").value);
 const personajes=document.getElementById("personajes").value;
-const lista=[personajes,...personajesExtra].filter(x=>x.trim());
-
-const cantidad={
-"30 segundos":3,
-"1 minuto":4,
-"2 minutos":6,
-"3 minutos":8,
-"4 minutos":10,
-"5 minutos":12
-}[duracion];
-
-proyecto=
-"VIRAL AI STUDIO\n\n"+
-"HISTORIA:\n"+idea+
-"\n\nPLATAFORMA: "+plataforma+
-"\nFORMATO: "+formato+
-"\nDURACIÓN: "+duracion+
-"\nESTILO: "+estilo+
-"\n\nPERSONAJES:\n"+
-(lista.length?lista.join("\n"):"Personajes por definir")+
-"\n\nIMÁGENES DE REFERENCIA: "+fotos.length+
-"\n\nPLAN DE ESCENAS:\n";
+proyecto="VIRAL AI STUDIO\n\n";
+proyecto+="HISTORIA:\n"+idea+"\n\n";
+proyecto+="FORMATO: "+formato+"\n";
+proyecto+="DURACIÓN: "+duracion+"\n";
+proyecto+="ESTILO: "+estilo+"\n\n";
+proyecto+="PERSONAJES:\n"+(personajes||"Personajes por definir")+"\n";
+proyecto+="\nIMÁGENES SUBIDAS:\n"+(imagenesSubidas.join("\n")||"Ninguna")+"\n\n";
+proyecto+="GUION Y PLAN DE ESCENAS:\n";
 
 for(let i=1;i<=cantidad;i++){
-proyecto+="\nESCENA "+i+"\n"+
-"Historia: "+idea+
-"\nPersonajes: "+(lista.join(", ")||"Por definir")+
-"\nEstilo visual: "+estilo+
-"\nFormato: "+formato+"\n";
+proyecto+="\nESCENA "+i+"\n";
+proyecto+="Historia: "+idea+"\n";
+proyecto+="Personajes: "+(personajes||"Por definir")+"\n";
+proyecto+="Estilo visual: "+estilo+"\n";
+proyecto+="Formato: "+formato+"\n";
+proyecto+="Continuidad: conservar la apariencia y vestimenta de los personajes.\n";
+proyecto+="Diálogos: crear diálogos naturales relacionados con la historia.\n";
+proyecto+="Cámara: movimientos cinematográficos y transiciones.\n";
 }
-
 document.getElementById("resultado").textContent=proyecto;
-document.getElementById("estado").textContent=
-"Proyecto preparado. Falta conectar el servicio de generación de videos con IA.";
+document.getElementById("estado").textContent="✅ Proyecto preparado correctamente.";
 }
 
-function descargarProyecto(){
+function descargar(){
 if(!proyecto){
-alert("Primero crea tu proyecto.");
+alert("Primero prepara tu proyecto");
 return;
 }
-const archivo=new Blob([proyecto],{type:"text/plain;charset=utf-8"});
-const url=URL.createObjectURL(archivo);
+const blob=new Blob([proyecto],{type:"text/plain;charset=utf-8"});
+const url=URL.createObjectURL(blob);
 const a=document.createElement("a");
 a.href=url;
 a.download="viral-ai-studio-proyecto.txt";
@@ -232,6 +213,6 @@ a.click();
 URL.revokeObjectURL(url);
 }
 </script>
-
 </body>
 </html>
+
